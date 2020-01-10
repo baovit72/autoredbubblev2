@@ -320,13 +320,18 @@ namespace Redbubble
                     UploadByCopy(info);
                 }
                 else if (info.UploadMethod == 3)
+                {
                     UploadByImage(info);
+                    Click(By.CssSelector("#media_painting"), true);
+                    Click(By.CssSelector("#media_digital"), true);
+                }
+                   
                 else
                     return false;
+                //Demo 
+                Click(By.CssSelector("#work_hidden_false"), true);
+                Click(By.CssSelector("#work_safe_for_work_true"), true); 
                 Click(By.CssSelector("#rightsDeclaration"), true);
-                //Demo
-                Click(By.CssSelector("#work_hidden_true"), true);
-                Click(By.CssSelector("#work_safe_for_work_true"), true);
                 Click(By.CssSelector("#submit-work"), true);
                 wait.Until(ExpectedConditions.UrlContains("works"));
             }

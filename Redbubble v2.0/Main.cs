@@ -130,10 +130,9 @@ namespace Redbubble_v2._0
                 foreach (RedbubbleInputInfo input in inputs)
                 {
                     currentNumberOfImagesUploaded++;
-                    if (uploadedImages.Contains(input.Image.TrimEnd().TrimStart()))
+                    if (uploadedImages.Contains(input.Image.TrimEnd().TrimStart()) || !File.Exists(input.Image))
                         continue;
-                    Processor.GetInstance().Begin(input);
-                   
+                    Processor.GetInstance().Begin(input); 
                     Invoke(updateProgress);
                     File.WriteAllLines(logFile, new List<string> { input.Image.TrimStart().TrimEnd() }); 
                 } 
