@@ -242,6 +242,10 @@ namespace Redbubble
                 try
                 {
                     var product = products[i];
+
+                    //Click enable
+                    if (product.GetAttribute("class").ToLower().Contains("all-disabled"))
+                        Click(By.CssSelector(".enable-all"), true, product);
                     //Click edit button
                     Click(By.CssSelector(".edit-product"), true, product);
                     //Get expanded edit panel
