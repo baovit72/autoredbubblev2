@@ -27,11 +27,12 @@ namespace Redbubble_v2._0
         public Main()
         {
             InitializeComponent();
-            
+
         }
         private void Main_Load(object sender, EventArgs e)
         {
-            Timer = new Thread(new ThreadStart(() => {
+            Timer = new Thread(new ThreadStart(() =>
+            {
                 int count = 15;
                 while (true)
                 {
@@ -53,7 +54,7 @@ namespace Redbubble_v2._0
             p.StartInfo.FileName = "Chrome\\chrome.exe";
             p.StartInfo.Arguments = "--remote-debugging-port=9222 \"https://redbubble.com\"";
             p.Start();
-        } 
+        }
         #endregion
         #region File Input
         private void DragDropHandler(object sender, DragEventArgs e)
@@ -114,28 +115,29 @@ namespace Redbubble_v2._0
                 MessageBox.Show("Check your input");
                 return;
             }
-            int currentNumberOfImagesUploaded = 0; 
+            int currentNumberOfImagesUploaded = 0;
             MethodInvoker updateProgress = delegate
             {
                 progressBar.Value = currentNumberOfImagesUploaded * 100 / inputs.Count;
                 lbProgress.Text = $"Uploaded {currentNumberOfImagesUploaded} in {inputs.Count} files";
             };
             string logFile = "Log.txt";
-            List<string> uploadedImages = File.Exists(logFile) ? File.ReadAllLines(logFile).ToList() : new List<string>();
+            List<string> uploadedImages = new List<string>(); //File.Exists(logFile) ? File.ReadAllLines(logFile).ToList() : new List<string>();
             Worker = new Thread(new ThreadStart(
             () =>
-            { 
+            {
                 isRunning = true;
-                Processor.GetInstance().CreateDriver(); 
+                Processor.GetInstance().CreateDriver();
                 foreach (RedbubbleInputInfo input in inputs)
                 {
                     currentNumberOfImagesUploaded++;
                     if (uploadedImages.Contains(input.Image.TrimEnd().TrimStart()) || !File.Exists(input.Image))
                         continue;
-                    Processor.GetInstance().Begin(input); 
+                    if (Processor.GetInstance().Begin(input)) 
+                        File.WriteAllLines(logFile, new List<string> { input.Image.TrimStart().TrimEnd() + "_" + input.Title }); 
                     Invoke(updateProgress);
-                    File.WriteAllLines(logFile, new List<string> { input.Image.TrimStart().TrimEnd() }); 
-                } 
+
+                }
                 Processor.GetInstance().Dispose();
                 Processor.GetInstance().RandomSleep(3045, 4980);
                 isRunning = false;
@@ -159,6 +161,6 @@ namespace Redbubble_v2._0
         }
         #endregion
 
-     
+
     }
 }

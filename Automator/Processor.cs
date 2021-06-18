@@ -38,7 +38,7 @@ namespace Redbubble
             try
             {
                 if (__Instance == null)
-                __Instance = new Processor();
+                    __Instance = new Processor();
             }
             catch { }
             return __Instance;
@@ -175,7 +175,7 @@ namespace Redbubble
         #region Contructor
         Processor()
         {
-             
+
         }
         #endregion
         #region Create driver
@@ -196,11 +196,19 @@ namespace Redbubble
         #region Go to Add New Work
         public void GoToAddNewWork(int method)
         {
-            driver.Manage().Window.Maximize();
-            Click(By.CssSelector("a[aria-label*='account']"), true);
+            try
+            {
+                driver.Manage().Window.Maximize();
+            }
+            catch
+            {
+
+            }
+            Click(By.CssSelector("button div[data-testid='ds-avatar']"), false);
             if (method == 1)
             {
-                Click(By.CssSelector("a[title*='Add New Work']"), true);
+                Click(By.CssSelector("a[href='/studio/dashboard']"), true);
+                Click(By.CssSelector("a[href='/portfolio/images/new?ref=dashboard']"), true);
             }
             else if (method == 2)
             {
@@ -329,15 +337,22 @@ namespace Redbubble
                     Click(By.CssSelector("#media_painting"), true);
                     Click(By.CssSelector("#media_digital"), true);
                 }
-                   
+
                 else
                     return false;
                 //Demo 
                 Click(By.CssSelector("#work_hidden_false"), true);
-                Click(By.CssSelector("#work_safe_for_work_true"), true); 
+                Click(By.CssSelector("#work_safe_for_work_true"), true);
                 Click(By.CssSelector("#rightsDeclaration"), true);
                 Click(By.CssSelector("#submit-work"), true);
-                wait.Until(ExpectedConditions.UrlContains("works"));
+                try
+                {
+                    wait.Until(ExpectedConditions.UrlContains("promote"));
+                }
+                catch
+                {
+                    wait.Until(ExpectedConditions.UrlContains("works"));
+                }
             }
             catch (Exception e)
             {
