@@ -207,8 +207,17 @@ namespace Redbubble
             Click(By.CssSelector("button div[data-testid='ds-avatar']"), false);
             if (method == 1)
             {
-                Click(By.CssSelector("a[href='/studio/dashboard']"), true);
-                Click(By.CssSelector("a[href='/portfolio/images/new?ref=dashboard']"), true);
+                try
+                {
+                    Click(By.CssSelector("a[href='/portfolio/images/new?ref=account-nav-dropdown']"), true);
+                    
+                }
+                catch
+                {
+                    Click(By.CssSelector("a[href='/studio/dashboard']"), true);
+                    Click(By.CssSelector("a[href='/portfolio/images/new?ref=dashboard']"), true);
+                }
+               
             }
             else if (method == 2)
             {
