@@ -204,7 +204,10 @@ namespace Redbubble
             {
 
             }
+            driver.Navigate().GoToUrl("https://www.redbubble.com/explore/for-you/");
+            Thread.Sleep(2000);
             Click(By.CssSelector("button div[data-testid='ds-avatar']"), false);
+            //javaScriptExecutor.ExecuteScript("document.querySelector(\"button div[data-testid='ds-avatar']\").click()"); 
             if (method == 1)
             {
                 try
@@ -310,7 +313,7 @@ namespace Redbubble
         #region Upload By Image
         public void UploadByImage(RedbubbleInputInfo info)
         {
-            GoToAddNewWork(random.Next() % 2 + 1);
+            GoToAddNewWork(/*random.Next() % 2 +*/ 1);
 
             //Upload image
             SendKey(By.CssSelector("#select-image-single"), info.Image, false);
@@ -329,12 +332,14 @@ namespace Redbubble
         {
             try
             {
-                try
-                {
-                    wait.Timeout = TimeSpan.FromMilliseconds(10000);
-                    Click(By.CssSelector("a[title*='Redbubble']"), true);
-                }
-                catch { }
+                //try
+                //{
+                //    wait.Timeout = TimeSpan.FromMilliseconds(10000);
+                //    Click(By.CssSelector("a[title*='Redbubble']"), true);
+                //}
+                //catch {
+                //    Click(By.CssSelector("img[class*='node_modules--redbubble-design-system-react-headerAndFooter-components-Footer-FooterLegal-themes-default__redbubbleLogo--']"), true);
+                //}
                 wait.Timeout = TimeSpan.FromMilliseconds(30000);
                 if (info.UploadMethod <= 2)
                 {
